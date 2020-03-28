@@ -49,7 +49,7 @@ async function downloadImage (manga_index,chapter,page,d) {
     writer.on('finish', resolve)
     writer.on('error', reject)
     setTimeout(()=> {
-        writer.destroy(new Error('Impossible to download the page '+page+' Please check your Internet Connection'))
+        writer.destroy(new Error('Impossible to download the page '+(page+1)+' Please check your Internet Connection'))
     },30000)
   })
 }
