@@ -29,19 +29,28 @@ async function downloadImage (manga_index,chapter,page,d) {
   
   const Url = `${url+'/mangas'+mangas[manga_index].pagePath}/${chapter}/${page<10 ? '0'+page : page}.jpg`
   const path = `${d}/page-${page<10 ? '0'+page : page}.jpg`
-  const writer = fs.createWriteStream(path)
+  
+
+  return new Promise(async (resolve, reject) => {
+    const writer = fs.createWriteStream(path)
+    let response
+    try {
+        response = await Axios({
+            url:Url,
+            method: 'GET',
+            responseType: 'stream'
+      })
+    } catch(e) {
+        reject(e)
+    }
+
+    response.data.pipe(writer)
     
-  const response = await Axios({
-    url:Url,
-    method: 'GET',
-    responseType: 'stream'
-  })
-
-  response.data.pipe(writer)
-
-  return new Promise((resolve, reject) => {
     writer.on('finish', resolve)
     writer.on('error', reject)
+    setTimeout(()=> {
+        writer.destroy(new Error('Impossible to download the page '+page+' Please check your Internet Connection'))
+    },10000)
   })
 }
 

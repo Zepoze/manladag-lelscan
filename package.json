@@ -1,6 +1,6 @@
 {
   "name": "manladag-lelscan",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "source lelscan for manladag",
   "main": "index.js",
   "scripts": {
