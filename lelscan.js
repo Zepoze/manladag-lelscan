@@ -97,7 +97,7 @@ async function downloadChapter(manga_index,chap, pathDownload) {
             await downloadImage(manga_index,chap,i,thatDir)
             this.emit('page-download-finished',{ ...tmp,page: i+1, nbPages, path: Path.join(thatDir) })
         } catch(error) {
-            this.emit('page-download-error',{ error, page: i+1 , ...tmp})
+            this.emit('page-download-error',{ error, page: i+1 , ...tmp, path: Path.join(thatDir)})
             throw error
         }
     }
