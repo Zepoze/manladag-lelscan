@@ -93,6 +93,7 @@ async function downloadChapter(manga_index,chap, pathDownload) {
     let i
     for (i = 0;i<nbPages;i++) {
         try {
+            this.emit('page-download-started',{ ...tmp,page: i+1, nbPages, path: Path.join(thatDir) })
             await downloadImage(manga_index,chap,i,thatDir)
             this.emit('page-download-finished',{ ...tmp,page: i+1, nbPages, path: Path.join(thatDir) })
         } catch(error) {
