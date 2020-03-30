@@ -45,12 +45,18 @@ async function downloadImage (manga_index,chapter,page,d) {
     }
 
     response.data.pipe(writer)
-    
-    writer.on('finish', resolve)
-    writer.on('error', reject)
+    const t = 
     setTimeout(()=> {
         writer.destroy(new Error('Impossible to download the page '+(page+1)+' Please check your Internet Connection'))
     },30000)
+    writer.on('finish', () => {
+        try {
+            clearTimeout(t)
+	} finally {
+            resolve()	
+	}
+    })
+    writer.on('error', reject)
   })
 }
 
